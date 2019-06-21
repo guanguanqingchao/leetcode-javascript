@@ -244,3 +244,21 @@
 
         return n.val
     };
+####  559. N叉树的最大深度
+
+    var maxDepth = function(root) {
+        if(root === null) return 0;
+
+        var max = 1;
+
+        root.children.forEach((child)=>{
+            var depth = maxDepth(child) + 1;
+
+            if(depth>max){
+                max = depth;
+            }
+        })
+
+        return max;
+
+    };
