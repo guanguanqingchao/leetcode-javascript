@@ -201,6 +201,57 @@
         return sum; 
 
     };
+   
+ #### 513. 找树左下角的值
+ 给定一个二叉树，在树的最后一行找到最左边的值。
+
+    示例 1:
+
+    输入:
+
+        2
+       / \
+      1   3
+
+    输出:
+    1
+
+
+    示例 2:
+
+    输入:
+
+            1
+           / \
+          2   3
+         /   / \
+        4   5   6
+           /
+          7
+
+    输出:
+    7
+
+     //这就是所谓的BFS算法。
+    //广度优先搜索，但是搜索的顺序是有要求的，因为题目要最底层的叶子节点的最左边的叶子，那么进入队列的顺序就是先右节点再左节点，这样能把每层的节点都能从右到左过一遍，那么用一个res保存最后的节点值就可以了
+    var findBottomLeftValue = function(root) {
+        let queue = [];
+        let res;
+        queue.push(root);
+
+        while(queue.length){
+            let node = queue.shift();
+            res = node.val;
+
+            if(node.right){
+                queue.push(node.right);
+            }
+            if(node.left){
+                queue.push(node.left);
+            }
+        }
+        return res;
+    };
 
 #### 230. 二叉搜索树中第K小的元素
 
@@ -277,3 +328,18 @@
         traverse(node.children[i], arr)
       }
 }
+
+#### 590 N叉树后序遍历
+    const postorder = function(root) {
+        const res = []
+        traverse(root, res)
+        return res
+    };
+
+    function traverse(node, res) {
+      if(node == null) return
+      for(let i = 0; i < node.children.length; i++) {
+        traverse(node.children[i], res)
+      }
+      res.push(node.val)
+    }
