@@ -148,5 +148,99 @@
 
         return result;
     };
+ 
+#### 129. 求根到叶子节点数字之和
+给定一个二叉树，它的每个结点都存放一个 0-9 的数字，每条从根到叶子节点的路径都代表一个数字。
+
+例如，从根到叶子节点路径 1->2->3 代表数字 123。
+
+计算从根到叶子节点生成的所有数字之和。
 
 
+    示例 1:
+
+    输入: [1,2,3]
+        1
+       / \
+      2   3
+    输出: 25
+    解释:
+    从根到叶子节点路径 1->2 代表数字 12.
+    从根到叶子节点路径 1->3 代表数字 13.
+    因此，数字总和 = 12 + 13 = 25.
+
+
+    //思路：利用层次遍历，每层的每个节点存放的是上层节点跟该节点的连接，
+    //每次到达叶子节点，更新sum的值
+    var sumNumbers = function(root) {
+
+        var sum = 0;
+        if(root==null) return sum;
+
+        var queue = [];
+        queue.push(root);
+
+        while(queue.length !== 0){
+            var node = queue.shift();
+
+            if(node.left == null && node.right==null){
+                sum += parseInt(node.val);
+            }
+
+            if(node.left){
+                node.left.val ='' + node.val + node.left.val;
+                queue.push(node.left)
+            }
+
+            if(node.right){
+                node.right.val = ''+node.val+node.right.val;
+                queue.push(node.right);
+            }
+        }
+
+        return sum; 
+
+    };
+
+#### 230. 二叉搜索树中第K小的元素
+
+    输入: root = [5,3,6,2,4,null,null,1], k = 3
+           5
+          / \
+         3   6
+        / \
+       2   4
+      /
+     1
+    输出: 3
+
+
+    //思路用栈来维护最小值
+    var kthSmallest = function(root, k) {
+
+        var stack=[];
+        var node = root；
+
+        //将所有子节点放到栈中
+        while(node){
+            stack.push(node);
+            node = node.left;   
+        }
+
+        //栈顶是最小值，每次弹出栈顶
+        //如果栈顶元素有右节点，入栈，并且将该节点的所有子节点入栈
+        var x=1; 
+        while(stack && x<=k){
+            var n = stack.pop();
+            x +=1;
+
+            var w = n.right;
+            while(w){
+                stack.push(w);
+                w = w.left;
+            }
+
+        }
+
+        return n.val
+    };
