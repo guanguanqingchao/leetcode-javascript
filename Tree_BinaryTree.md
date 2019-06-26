@@ -4,6 +4,23 @@
 节点
 
 
+#### 110. 平衡二叉树
+
+	var isBalanced = function(root) {
+	    if (!root) return true;
+        
+	    if (Math.abs(depth(root.left)-depth(root.right))>1) return false; 
+        
+	    return isBalanced(root.left) && isBalanced(root.right); 
+        
+	    function depth(node){
+	        if (!node) return 0;
+	        var left = depth(node.left);
+	        var right = depth(node.right);
+	        return Math.max(left, right)+1;
+	    }
+        
+	};
 
 #### 257. 二叉树的所有路径
 给定一个二叉树，返回所有从根节点到叶子节点的路径。
